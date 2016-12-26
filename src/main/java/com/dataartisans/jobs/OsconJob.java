@@ -28,14 +28,18 @@ public class OsconJob {
     //env.enableCheckpointing(1000);
 
     // Uncomment this line to enable Event Time
-    //env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
+    env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 
     // Simulate some sensor data
     DataStream<KeyedDataPoint<Double>> sensorStream = generateSensorData(env);
 
+    //sensorStream.print();
+
     // Write this sensor stream out to InfluxDB
     sensorStream
       .addSink(new InfluxDBSink<>("sensors"));
+
+    //sensorStream.print();
 
     // Compute a windowed sum over this data and write that to InfluxDB as well.
     sensorStream
@@ -57,7 +61,7 @@ public class OsconJob {
 //      .addSink(new InfluxDBSink<>("amplifiedSensors"));
 
     // execute program
-    env.execute("OSCON Example");
+    env.execute("Flink Demo");
   }
 
   private static DataStream<KeyedDataPoint<Double>> generateSensorData(StreamExecutionEnvironment env) {
